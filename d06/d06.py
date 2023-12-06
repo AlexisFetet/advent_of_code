@@ -21,8 +21,7 @@ def part1(lines):
     for time, distance in zip(times, distances):
         inf_val, upper_val = solve(time, distance)
         inf_val = int(inf_val) + 1
-        upper_val = int(upper_val) if int(
-            upper_val) != upper_val else int(upper_val) - 1
+        upper_val = int(upper_val - 1)
         solutions = upper_val - inf_val + 1
         prod *= solutions
     return prod
