@@ -54,7 +54,6 @@ def part2(lines: list[str], max_cycles=1000000):
     period_start = known_configs[board.data.tobytes()]
     period_length = len(known_configs) - period_start + 1
     leftover = (max_cycles - period_start - 1) % period_length
-    print(period_start, period_length, leftover)
     for _ in range(leftover - 1):
         board = cycle(board)
     return result(board)
