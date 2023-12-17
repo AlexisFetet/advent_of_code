@@ -117,5 +117,5 @@ if __name__ == '__main__':
     with open(f"{day}.txt", "r", encoding="utf-8") as file:
         my_input = file.read().splitlines()
 
-    #print(f"Answer part1 : {part1(my_tests)}")
+    print(f"Answer part1 : {part1(my_tests)}")
     print(f"Answer part2 : {part2(my_input)}")
