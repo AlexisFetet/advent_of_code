@@ -67,12 +67,8 @@ def A_Star(start: complex, goal: complex, height: int, width: int, weight: list[
     openSet.add((start,))
     gScore = {(start, 0): 0}
     fScore = {(start): h(start, goal)}
-    ite = 0
 
     while len(openSet) != 0:
-        ite += 1
-        if ite % 1000 == 0:
-            print(len(openSet))
 
         current = min(openSet, key=lambda x: fScore[x[-1]])
         openSet.remove(current)
