@@ -9,37 +9,35 @@ import os
 
 DIGIT = re.compile(r"(\d+)")
 
-@lru_cache(maxsize=None)
-def get(needed, needed_sharp):
-    return [elem for elem in product('.#', repeat=needed) if elem.count('#') == needed_sharp]
 
-def key(line):
-    return [len(string) for string in re.findall(r"(#+)", line)]
+@lru_cache(maxsize=None)
+def recursive(string, target):
+    if string == '':
+        return 1 if not target else 0
+    if not target:
+        return 1 if '#' not in string else 0
+
+    arrangements = 0
+    if string[0] in '.?':
+        arrangements += recursive(string[1:], target)
+    if string[0] in '#?':
+        if (target[0] <= len(string) and "." not in string[: target[0]]
+                and (target[0] == len(string) or string[target[0]] != "#")):
+            arrangements += recursive(string[target[0] + 1:], target[1:])
+    return arrangements
 
 
 def part1(lines: list[str]):
-    targets = [[int(digit) for digit in DIGIT.findall(line)] for line in lines]
-    counter = 0
-    for line, target in zip(lines, targets):
-        needed = line.count('?')
-        needed_sharp = sum(target) - line.count('#')
-        all_combinations = get(needed, needed_sharp)
-        init_str = line.split()[0]
-        for combination in all_combinations:
-            working_str = ''
-            replaced = 0
-            for char in init_str:
-                if char != '?':
-                    working_str += char
-                else:
-                    working_str += combination[replaced]
-                    replaced += 1
-            if key(working_str) == target:
-                counter += 1
-    return counter
+    data = [line.split() for line in lines]
+    data = [(elem[0], tuple(int(x) for x in elem[1].split(','))) for elem in data]
+    return sum([recursive(string, target) for string, target in data])
+
 
 def part2(lines: list[str]):
-    
+    data = [line.split() for line in lines]
+    data = [(elem[0], tuple(int(x) for x in elem[1].split(','))) for elem in data]
+    return sum([recursive('?'.join([string] * 5), target * 5) for string, target in data])
+
 
 if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -53,4 +51,4 @@ if __name__ == '__main__':
 
     import time
     print(f"Answer part1 : {part1(my_input)}")
-    print(f"Answer part2 : {part2(my_tests)}")
+    print(f"Answer part2 : {part2(my_input)}")
