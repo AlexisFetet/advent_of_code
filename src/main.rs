@@ -1,10 +1,12 @@
 // use crate::d1::D1Solver;
 // use crate::d2::D2Solver;
-use crate::d3::D3Solver;
+// use crate::d3::D3Solver;
+use crate::d4::D4Solver;
 
 pub mod d1;
 pub mod d2;
 pub mod d3;
+pub mod d4;
 
 fn main() {
 
@@ -36,15 +38,28 @@ fn main() {
 
     // ----------------------------------------------
 
-    let mut d3_solver: D3Solver = D3Solver{..Default::default()};
+    // let mut d3_solver: D3Solver = D3Solver{..Default::default()};
 
-    d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/test/1.txt"));
-    println!("Day3 test1 p1: {}", d3_solver.solve_p1());
-    d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/test/2.txt"));
-    println!("Day3 test2 p2: {}", d3_solver.solve_p2());
+    // d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/test/1.txt"));
+    // println!("Day3 test1 p1: {}", d3_solver.solve_p1());
+    // d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/test/2.txt"));
+    // println!("Day3 test2 p2: {}", d3_solver.solve_p2());
 
 
-    d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/input.txt"));
-    println!("Day3 p1: {}", d3_solver.solve_p1());
-    println!("Day3 p2: {}", d3_solver.solve_p2());
+    // d3_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d3/input.txt"));
+    // println!("Day3 p1: {}", d3_solver.solve_p1());
+    // println!("Day3 p2: {}", d3_solver.solve_p2());
+
+    // ----------------------------------------------
+
+    let mut d4_solver: D4Solver = D4Solver{..Default::default()};
+
+    d4_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d4/test/1.txt"));
+    println!("Day4 test1 p1: {}", d4_solver.solve_p1());
+    println!("Day4 test2 p2: {}", d4_solver.solve_p2());
+
+
+    d4_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d4/input.txt"));
+    println!("Day4 p1: {}", d4_solver.solve_p1());
+    println!("Day4 p2: {}", d4_solver.solve_p2());
 }
