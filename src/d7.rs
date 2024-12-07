@@ -1,10 +1,10 @@
-use std::{collections::VecDeque, fs};
+use std::fs;
 
 use regex::{self, Regex};
 
 #[derive(Debug)]
 pub struct D7Solver {
-    pub data: Vec<(i64, VecDeque<i64>)>,
+    pub data: Vec<(i64, Vec<i64>)>,
 }
 
 impl D7Solver {
@@ -26,7 +26,7 @@ impl D7Solver {
     pub fn solve_p1(&self) -> i64 {
         let mut result = 0;
         for (operation_result, operands) in self.data.iter() {
-            if check(&mut operands.clone(), *operation_result, 1) {
+            if check(&operands[..], *operation_result, 1) {
                 result += operation_result;
             }
         }
@@ -36,7 +36,7 @@ impl D7Solver {
     pub fn solve_p2(&self) -> i64 {
         let mut result = 0;
         for (operation_result, operands) in self.data.iter() {
-            if check(&mut operands.clone(), *operation_result, 2) {
+            if check(&operands[..], *operation_result, 2) {
                 result += operation_result;
             }
         }
@@ -50,21 +50,21 @@ impl Default for D7Solver {
     }
 }
 
-fn check(numbers: &mut VecDeque<i64>, target: i64, part: i32) -> bool {
+fn check(numbers: &[i64], target: i64, part: i32) -> bool {
     if target < 0 {return false;}
     if numbers.len() == 1 {
-        return *(numbers.back().unwrap()) == target;
+        return numbers[0] == target;
     }
-    let tail = numbers.pop_back().unwrap();
+    let tail = numbers[numbers.len() - 1];
     let mut result = false;
     if (target % tail) == 0 {
-        result |= check(&mut numbers.clone(), target / tail, part);
+        result |= check(&numbers[..(numbers.len() - 1)], target / tail, part);
     }
     if part == 2 {
         if target.to_string().ends_with(&tail.to_string()) && (target != tail) {
-            result |= check(&mut numbers.clone(), target.to_string().strip_suffix(&tail.to_string()).unwrap().parse::<i64>().unwrap(), part);
+            result |= check(&numbers[..(numbers.len() - 1)], target.to_string().strip_suffix(&tail.to_string()).unwrap().parse::<i64>().unwrap(), part);
         }
     }
-    result |= check(numbers, target - tail, part);
+    result |= check(&numbers[..(numbers.len() - 1)], target - tail, part);
     result
 }
