@@ -1,10 +1,10 @@
-use std::fs;
+use std::{collections::HashSet, fs};
 
 use itertools::Itertools;
 
 #[derive(Debug)]
 pub struct D6Solver {
-    pub data: Vec<(i32, i32)>,
+    pub data: HashSet<(i32, i32)>,
     pub starting_point: (i32, i32),
     pub x_max: i32,
     pub y_max: i32
@@ -26,7 +26,7 @@ impl D6Solver {
 
             for (x, character) in line.chars().enumerate() {
                 if character == '#' {
-                    self.data.push((x as i32, y as i32));
+                    self.data.insert((x as i32, y as i32));
                 } else if character == '^' {
                     self.starting_point = (x as i32, y as i32);
                 }
@@ -45,12 +45,12 @@ impl D6Solver {
         let (visited_positions, _finish_in_bound) = get_path(&self.data, self.starting_point, self.x_max, self.y_max);
         for (x_injected, y_injected) in visited_positions.iter() {
             if (*x_injected, *y_injected) != self.starting_point {
-                data.push((*x_injected, *y_injected)); // prevent always copying the vec
+                data.insert((*x_injected, *y_injected)); // prevent always copying the set
                 let (_visited_positions, finish_in_bound) = get_path(&data, self.starting_point, self.x_max, self.y_max);
                 if finish_in_bound {
                     result += 1;
                 }
-                data.pop(); // clean
+                data.remove(&(*x_injected, *y_injected)); // clean
             }
         }
         result
@@ -59,7 +59,7 @@ impl D6Solver {
 
 impl Default for D6Solver {
     fn default() -> D6Solver {
-        D6Solver {data : vec![], starting_point: (0, 0), x_max: 0, y_max: 0}
+        D6Solver {data : HashSet::new(), starting_point: (0, 0), x_max: 0, y_max: 0}
     }
 }
 
@@ -73,22 +73,20 @@ fn turn_right(direction: &mut(i32, i32)) {
     direction.1 = x;
 }
 
-fn get_path(data: &Vec<(i32, i32)>, starting_point: (i32, i32), x_max: i32, y_max: i32) -> (Vec<(i32, i32)>, bool) {
+fn get_path(data: &HashSet<(i32, i32)>, starting_point: (i32, i32), x_max: i32, y_max: i32) -> (HashSet<(i32, i32)>, bool) {
     let mut current = starting_point;
     let mut direction = (0, -1);
-    let mut visited_states = vec![];
+    let mut visited_states = HashSet::new();
     while is_in_bound(current.0, current.1, x_max, y_max) && !visited_states.contains(&(current.0, current.1, direction.0, direction.1)) {
         if !data.contains(&(current.0 + direction.0, current.1 + direction.1)) {
-            visited_states.push((current.0, current.1, direction.0, direction.1));
+            visited_states.insert((current.0, current.1, direction.0, direction.1));
             current.0 = current.0 + direction.0;
             current.1 = current.1 + direction.1;
         } else {
-            visited_states.push((current.0, current.1, direction.0, direction.1));
+            visited_states.insert((current.0, current.1, direction.0, direction.1));
             turn_right(&mut direction);
         }
     }
-    let mut visited_locations = visited_states.iter().map(|(x, y, _dirx, _diry)| (*x, *y)).collect_vec();
-    visited_locations.sort();
-    visited_locations.dedup();
+    let visited_locations: HashSet<(i32, i32)> = visited_states.iter().map(|(x, y, _dirx, _diry)| (*x, *y)).collect();
     (visited_locations, is_in_bound(current.0, current.1, x_max, y_max))
 }
