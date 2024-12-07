@@ -1,11 +1,11 @@
-use std::{collections::HashMap, fs};
+use std::{collections::{HashMap, HashSet}, fs};
 
 use itertools::Itertools;
 use regex::{self, Regex};
 
 #[derive(Debug)]
 pub struct Data {
-    pub order: HashMap<i32, Vec<i32>>,
+    pub order: HashMap<i32, HashSet<i32>>,
     pub paging: Vec<Vec<i32>>
 }
 
@@ -28,7 +28,7 @@ impl D5Solver {
 
         for capture in re_order.captures_iter(&contents) {
             let (first, second) = (capture.name("num1").unwrap().as_str().parse::<i32>().unwrap(), capture.name("num2").unwrap().as_str().parse::<i32>().unwrap());
-            self.data.order.entry(first).or_insert(vec![]).push(second);
+            self.data.order.entry(first).or_insert(HashSet::new()).insert(second);
         }
 
         self.data.paging = re_paging.captures_iter(&contents).map(|capture| {
@@ -65,7 +65,7 @@ impl Default for D5Solver {
     }
 }
 
-fn is_valid(paging: &[i32], order: &HashMap<i32, Vec<i32>>) -> bool {
+fn is_valid(paging: &[i32], order: &HashMap<i32, HashSet<i32>>) -> bool {
     let mut result = true;
     'external: for indx in 0..paging.len() {
         let current = paging[paging.len() - indx - 1];
@@ -81,7 +81,7 @@ fn is_valid(paging: &[i32], order: &HashMap<i32, Vec<i32>>) -> bool {
     result
 }
 
-fn repair(paging: &mut [i32], order: &HashMap<i32, Vec<i32>>) {
+fn repair(paging: &mut [i32], order: &HashMap<i32, HashSet<i32>>) {
     if paging.len() == 0 {return;}
     let length  = paging.len();
     if !is_valid(&paging[1..], order) {
