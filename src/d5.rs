@@ -37,25 +37,21 @@ impl D5Solver {
     }
 
     pub fn solve_p1(&self) -> i32 {
-        let mut result = 0;
-        for paging in self.data.paging.iter() {
-            if is_valid(paging, &self.data.order) {
-                result += paging[paging.len()/2];
-            }
-        }
-        result
+        self.data.paging.iter().filter(| paging | 
+            is_valid(paging, &self.data.order)
+        ).fold(0, | acc, paging | 
+            acc + paging[paging.len()/2]
+        )
     }
 
     pub fn solve_p2(&self) -> i32 {
-        let mut result = 0;
-        let mut data = self.data.paging.clone();
-        for paging in data.iter_mut() {
-            if !is_valid(paging, &self.data.order) {
-                repair(paging, &self.data.order);
-                result += paging[paging.len()/2];
-            }
-        }
-        result
+        self.data.paging.clone().iter_mut().filter(| paging | 
+            !is_valid(paging, &self.data.order)
+        ).map(| paging | {
+            repair(paging, &self.data.order); paging
+        }).fold(0, | acc, paging | {
+            acc + paging[paging.len()/2]
+        })
     }
 }
 
