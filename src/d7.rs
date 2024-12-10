@@ -24,23 +24,19 @@ impl D7Solver {
     }
 
     pub fn solve_p1(&self) -> i64 {
-        let mut result = 0;
-        for (operation_result, operands) in self.data.iter() {
-            if check(&operands[..], *operation_result, 1) {
-                result += operation_result;
-            }
-        }
-        result
+        self.data.iter().filter(| (operation_result, operands) |
+            check(&operands[..], *operation_result, 1)
+        ).fold(0, | acc, (operation_result, _operands) |
+            acc + operation_result
+        )
     }
 
     pub fn solve_p2(&self) -> i64 {
-        let mut result = 0;
-        for (operation_result, operands) in self.data.iter() {
-            if check(&operands[..], *operation_result, 2) {
-                result += operation_result;
-            }
-        }
-        result
+        self.data.iter().filter(| (operation_result, operands) |
+            check(&operands[..], *operation_result, 2)
+        ).fold(0, | acc, (operation_result, _operands) |
+            acc + operation_result
+        )
     }
 }
 
