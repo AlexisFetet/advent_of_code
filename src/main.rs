@@ -11,7 +11,8 @@
 // use crate::d11::D11Solver;
 // use crate::d12::D12Solver;
 // use crate::d13::D13Solver;
-use crate::d14::D14Solver;
+// use crate::d14::D14Solver;
+use crate::d15::D15Solver;
 
 pub mod d1;
 pub mod d2;
@@ -27,6 +28,7 @@ pub mod d11;
 pub mod d12;
 pub mod d13;
 pub mod d14;
+pub mod d15;
 
 fn main() {
 
@@ -202,13 +204,30 @@ fn main() {
 
     // ----------------------------------------------
 
-    let mut d14_solver: D14Solver = D14Solver{..Default::default()};
+    // let mut d14_solver: D14Solver = D14Solver{..Default::default()};
 
-    d14_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d14/test/1.txt"));
-    println!("Day14 test1 p1: {}", d14_solver.solve_p1(11, 7));
+    // d14_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d14/test/1.txt"));
+    // println!("Day14 test1 p1: {}", d14_solver.solve_p1(11, 7));
 
 
-    d14_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d14/input.txt"));
-    println!("Day14 p1: {}", d14_solver.solve_p1(101, 103));
-    println!("Day14 p2: {}", d14_solver.solve_p2(101, 103));
+    // d14_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d14/input.txt"));
+    // println!("Day14 p1: {}", d14_solver.solve_p1(101, 103));
+    // println!("Day14 p2: {}", d14_solver.solve_p2(101, 103));
+
+    // ----------------------------------------------
+
+    let mut d15_solver: D15Solver = D15Solver{..Default::default()};
+
+    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/1.txt"));
+    println!("Day15 test1 p1: {}", d15_solver.solve_p1());
+
+    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/2.txt"));
+    println!("Day15 test2 p1: {}", d15_solver.solve_p1());
+
+    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/3.txt"));
+    println!("Day15 test3 p2: {}", d15_solver.solve_p2());
+
+    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/input.txt"));
+    println!("Day15 p1: {}", d15_solver.solve_p1());
+    // println!("Day15 p2: {}", d15_solver.solve_p2());
 }
