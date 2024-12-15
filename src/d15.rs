@@ -29,17 +29,39 @@ impl D15Solver {
 
         for instruction in self.moves.chars() {
             let direction = get_dir(instruction, self.width);
-            if push(robot, direction, &mut map) {
-                map.replace_range(robot as usize..(robot + 1) as usize, &String::from('.'));
+            if test_push(robot, direction, &map) {
+                perform_push(robot, direction, &mut map);
                 robot += direction;
             }
         }
 
-        map.char_indices().filter(| (_index, character) | *character == 'O').fold(0, | acc, (indx, _character) | acc + (indx as i32 % self.width + (indx as i32 / self.width) * 100))
+        map.char_indices()
+            .filter(| (_index, character) | *character == 'O')
+            .fold(0, | acc, (indx, _character) | {
+                let (x, y) = (indx as i32 % self.width, indx as i32 / self.width);
+                acc + ( x  + y * 100)
+            })
     }
 
-    pub fn solve_p2(&self) -> u32 {
-        0
+    pub fn solve_p2(&self) -> i32 {
+        let mut map = self.map.clone().replace("#", "##").replace("O", "[]").replace(".", "..").replace("@", "@.");
+        let width = self.width * 2;
+        let mut robot = map.find('@').unwrap() as i32;
+
+        for instruction in self.moves.chars() {
+            let direction = get_dir(instruction, width);
+            if test_push(robot, direction, &map) {
+                perform_push(robot, direction, &mut map);
+                robot += direction;
+            }
+        }
+
+        map.char_indices()
+            .filter(| (_index, character) | *character == '[')
+            .fold(0, | acc, (indx, _character) | {
+                let (x, y) = (indx as i32 % width, indx as i32 / width);
+                acc + ( x  + y * 100)
+            })
     }
 }
 
@@ -59,25 +81,63 @@ fn get_dir(command: char, width: i32) -> i32 {
     }
 }
 
-fn push(position: i32, direction: i32, map: &mut String) -> bool {
+fn test_push(position: i32, direction: i32, map: &String) -> bool {
     let current = map.chars().nth(position as usize).unwrap();
     if current == '#' {
         return false;
     }
     let next = map.chars().nth((position + direction) as usize).unwrap();
-    let mut result = false;
+    let mut result = true;
     match next {
         '.' => {
-            map.replace_range((position + direction) as usize..(position + direction + 1) as usize, &String::from(current));
             result = true;
         },
         'O' => {
-            if push(position + direction, direction, map) {
-                map.replace_range((position + direction) as usize..(position + direction + 1) as usize, &String::from(current));
-                result = true;
+            result = test_push(position + direction, direction, map);
+        },
+        '[' => {
+            result &= test_push(position + direction, direction, map);
+            if direction.abs() != 1 {
+                result &= test_push(position + direction + 1, direction, map);
+            }
+        },
+        ']' => {
+            result &= test_push(position + direction, direction, map);
+            if direction.abs() != 1 {
+                result &= test_push(position + direction - 1, direction, map);
+            }
+        },
+        _ => {
+            result = false
+        }
+    }
+    result
+}
+
+fn perform_push(position: i32, direction: i32, map: &mut String) {
+    let current = map.chars().nth(position as usize).unwrap();
+    if current == '#' {
+        return;
+    }
+    let next = map.chars().nth((position + direction) as usize).unwrap();
+    match next {
+        'O' => {
+            perform_push(position + direction, direction, map);
+        },
+        '[' => {
+            perform_push(position + direction, direction, map);
+            if direction.abs() != 1 {
+                perform_push(position + direction + 1, direction, map);
+            }
+        },
+        ']' => {
+            perform_push(position + direction, direction, map);
+            if direction.abs() != 1 {
+                perform_push(position + direction - 1, direction, map);
             }
         },
         _ => {}
     }
-    result
+    map.replace_range((position + direction) as usize..(position + direction + 1) as usize, &String::from(current));
+    map.replace_range(position as usize..(position + 1) as usize, &String::from('.'));
 }

@@ -223,11 +223,12 @@ fn main() {
 
     d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/2.txt"));
     println!("Day15 test2 p1: {}", d15_solver.solve_p1());
+    println!("Day15 test2 p2: {}", d15_solver.solve_p2());
 
     d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/3.txt"));
     println!("Day15 test3 p2: {}", d15_solver.solve_p2());
 
     d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/input.txt"));
     println!("Day15 p1: {}", d15_solver.solve_p1());
-    // println!("Day15 p2: {}", d15_solver.solve_p2());
+    println!("Day15 p2: {}", d15_solver.solve_p2());
 }
