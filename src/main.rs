@@ -12,7 +12,8 @@
 // use crate::d12::D12Solver;
 // use crate::d13::D13Solver;
 // use crate::d14::D14Solver;
-use crate::d15::D15Solver;
+// use crate::d15::D15Solver;
+use crate::d16::D16Solver;
 
 pub mod d1;
 pub mod d2;
@@ -29,6 +30,7 @@ pub mod d12;
 pub mod d13;
 pub mod d14;
 pub mod d15;
+pub mod d16;
 
 fn main() {
 
@@ -216,19 +218,46 @@ fn main() {
 
     // ----------------------------------------------
 
-    let mut d15_solver: D15Solver = D15Solver{..Default::default()};
+    // let mut d15_solver: D15Solver = D15Solver{..Default::default()};
 
-    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/1.txt"));
-    println!("Day15 test1 p1: {}", d15_solver.solve_p1());
+    // d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/1.txt"));
+    // println!("Day15 test1 p1: {}", d15_solver.solve_p1());
 
-    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/2.txt"));
-    println!("Day15 test2 p1: {}", d15_solver.solve_p1());
-    println!("Day15 test2 p2: {}", d15_solver.solve_p2());
+    // d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/2.txt"));
+    // println!("Day15 test2 p1: {}", d15_solver.solve_p1());
+    // println!("Day15 test2 p2: {}", d15_solver.solve_p2());
 
-    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/3.txt"));
-    println!("Day15 test3 p2: {}", d15_solver.solve_p2());
+    // d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/test/3.txt"));
+    // println!("Day15 test3 p2: {}", d15_solver.solve_p2());
 
-    d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/input.txt"));
-    println!("Day15 p1: {}", d15_solver.solve_p1());
-    println!("Day15 p2: {}", d15_solver.solve_p2());
+    // d15_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d15/input.txt"));
+    // println!("Day15 p1: {}", d15_solver.solve_p1());
+    // println!("Day15 p2: {}", d15_solver.solve_p2());
+
+    // ----------------------------------------------
+
+    let mut d16_solver: D16Solver = D16Solver{..Default::default()};
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/1.txt"));
+    println!("Day16 test1 p1: {} EXPECT: 7036", d16_solver.solve_p1());
+    // println!("Day16 test1 p2: {}", d16_solver.solve_p2());
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/2.txt"));
+    println!("Day16 test2 p1: {} EXPECT: 11048", d16_solver.solve_p1());
+    // println!("Day16 test2 p2: {}", d16_solver.solve_p2());
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/3.txt"));
+    println!("Day16 test3 p1: {} EXPECT: 21148", d16_solver.solve_p1());
+    // println!("Day16 test3 p2: {}", d16_solver.solve_p2());
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/4.txt"));
+    println!("Day16 test4 p1: {} EXPECT: 5078", d16_solver.solve_p1());
+    // println!("Day16 test4 p2: {}", d16_solver.solve_p2());
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/5.txt"));
+    println!("Day16 test5 p1: {} EXPECT: 4013", d16_solver.solve_p1());
+
+    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/input.txt"));
+    println!("Day16 p1: {}", d16_solver.solve_p1());
+    // println!("Day16 p2: {}", d16_solver.solve_p2());
 }
