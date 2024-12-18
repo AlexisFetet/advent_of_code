@@ -1,4 +1,4 @@
-use std::{collections::{BinaryHeap, VecDeque}, fs};
+use std::{collections::{BinaryHeap, HashSet, VecDeque}, fs};
 
 #[derive(Debug)]
 pub struct D16Solver {
@@ -16,6 +16,7 @@ pub struct Node {
     pub neighbours: Vec<usize>,
     pub value: char,
     pub cost: usize,
+    pub best_from: Vec<usize>,
     pub heuristic: usize
 }
 
@@ -36,8 +37,8 @@ impl D16Solver {
         let mut nodes_left_right = vec![];
         // create all nodes with their neighbour
         for (index, character) in contents.chars().into_iter().enumerate() {
-            let mut new_node_up_down = Node {neighbours: vec![], value: character, cost: usize::MAX, heuristic: heuristic(index, self.width)};
-            let mut new_node_left_right = Node {neighbours: vec![], value: character, cost: usize::MAX, heuristic: heuristic(index, self.width)};
+            let mut new_node_up_down = Node {neighbours: vec![], value: character, cost: usize::MAX, heuristic: heuristic(index, self.width), best_from: vec![]};
+            let mut new_node_left_right = Node {neighbours: vec![], value: character, cost: usize::MAX, heuristic: heuristic(index, self.width), best_from: vec![]};
             if character == '#' {
                 self.nodes.push(new_node_up_down);
                 nodes_left_right.push(new_node_left_right);
@@ -85,8 +86,28 @@ impl D16Solver {
         self.nodes[self.end].cost.min(self.nodes[self.end + self.length].cost)
     }
 
-    pub fn solve_p2(&self) -> u32 {
-        0
+    pub fn solve_p2(&self) -> usize {
+        let end;
+        let mut visited = HashSet::<usize>::new();
+        if self.nodes[self.end].cost < self.nodes[self.end + self.length].cost {
+            end = self.end;
+        } else {
+            end = self.end + self.length;
+        }
+        let mut processing_queue = VecDeque::<usize>::new();
+        processing_queue.push_back(end);
+        while processing_queue.len() != 0 {
+            let current = processing_queue.pop_front().unwrap();
+            visited.insert(current % self.length);
+            let current_node = self.nodes[current].clone();
+            for neightbour in current_node.best_from.iter() {
+                if !visited.contains(&(neightbour % self.length)) && !processing_queue.contains(neightbour) {
+                processing_queue.push_back(*neightbour);
+
+                }
+            }
+        }
+        visited.len()
     }
 }
 
@@ -118,6 +139,11 @@ fn a_star(graph: &mut Vec<Node>, start: usize, width: usize) {
             }
             neightbour_node.cost = new_cost;
             neightbour_node.heuristic = usize::MAX - (new_cost + heuristic(*neightbour, width));
+            if graph[*neightbour].cost == new_cost {
+                graph[*neightbour].best_from.push(current_node_index);
+            } else if graph[*neightbour].cost > new_cost {
+                graph[*neightbour].best_from = vec![current_node_index];
+            }
             if !closed_list.contains(neightbour) {
                 if !open_list.iter().any(| (_heuristic, index, node) | (index == neightbour) && (node.cost < neightbour_node.cost)) {
                     graph[*neightbour].cost = neightbour_node.cost;

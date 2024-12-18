@@ -244,26 +244,26 @@ fn main() {
 
     d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/1.txt"));
     println!("Day16 test1 p1: {} EXPECT: 7036", d16_solver.solve_p1());
-    // println!("Day16 test1 p2: {}", d16_solver.solve_p2());
+    println!("Day16 test1 p2: {} EXPECT: 45", d16_solver.solve_p2());
 
     d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/2.txt"));
     println!("Day16 test2 p1: {} EXPECT: 11048", d16_solver.solve_p1());
-    // println!("Day16 test2 p2: {}", d16_solver.solve_p2());
+    println!("Day16 test2 p2: {} EXPECT: 64", d16_solver.solve_p2());
 
-    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/3.txt"));
-    println!("Day16 test3 p1: {} EXPECT: 21148", d16_solver.solve_p1());
+    // d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/3.txt"));
+    // println!("Day16 test3 p1: {} EXPECT: 21148", d16_solver.solve_p1());
     // println!("Day16 test3 p2: {}", d16_solver.solve_p2());
 
-    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/4.txt"));
-    println!("Day16 test4 p1: {} EXPECT: 5078", d16_solver.solve_p1());
+    // d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/4.txt"));
+    // println!("Day16 test4 p1: {} EXPECT: 5078", d16_solver.solve_p1());
     // println!("Day16 test4 p2: {}", d16_solver.solve_p2());
 
-    d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/5.txt"));
-    println!("Day16 test5 p1: {} EXPECT: 4013", d16_solver.solve_p1());
+    // d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/test/5.txt"));
+    // println!("Day16 test5 p1: {} EXPECT: 4013", d16_solver.solve_p1());
 
     d16_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d16/input.txt"));
     println!("Day16 p1: {}", d16_solver.solve_p1());
-    // println!("Day16 p2: {}", d16_solver.solve_p2());
+    println!("Day16 p2: {}", d16_solver.solve_p2());
 
     // ----------------------------------------------
 
