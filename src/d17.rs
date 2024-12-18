@@ -89,7 +89,7 @@ impl D17Solver {
                 break;
             }
             if new_program.len() > cpu.program.len() {
-                low_bits = (a_start % ((1 << shift) -1 )) + 1;
+                low_bits = (a_start % ((1 << shift) - 1 )) + 1;
                 a_start >>= shift;
             } else {
                 if new_program.ends_with(&cpu.program[cpu.program.len() - new_program.len() as usize..]) {
@@ -104,7 +104,7 @@ impl D17Solver {
                 }
             }
             if a_start == 0 && low_bits == 1 {
-                shift += 1;
+                shift += 3;
             }
         }
         a_start + low_bits
