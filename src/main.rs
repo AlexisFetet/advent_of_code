@@ -267,12 +267,12 @@ fn main() {
 
     let mut d17_solver: D17Solver = D17Solver{..Default::default()};
 
-    // d17_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d17/test/5.txt"));
-    // println!("Day17 test1 p1: {:?}", d17_solver.solve_p1());
-    // println!("Day17 test2 p2: {}", d17_solver.solve_p2());
+    d17_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d17/test/5.txt"));
+    println!("Day17 test1 p1: {:?}", d17_solver.solve_p1());
+    println!("Day17 test2 p2: {}", d17_solver.solve_p2());
 
 
     d17_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d17/input.txt"));
     println!("Day17 p1: {:?}", d17_solver.solve_p1());
-    // println!("Day17 p2: {}", d17_solver.solve_p2());
+    println!("Day17 p2: {}", d17_solver.solve_p2());
 }

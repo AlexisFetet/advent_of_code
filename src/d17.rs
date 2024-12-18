@@ -1,4 +1,4 @@
-use std::{fs, iter::zip};
+use std::fs;
 
 use regex::Regex;
 
@@ -55,12 +55,59 @@ impl D17Solver {
                 new_program.push(maybe_instruction.unwrap());
             }
         }
-        println!("A: {} B: {} C: {}", cpu.register_a, cpu.register_b, cpu.register_c);
         new_program
     }
 
     pub fn solve_p2(&self) -> u64 {
-        0
+        let mut new_program: Vec<u64> = vec![];
+        let mut a_start = 0;
+        let mut low_bits = 1;
+        let mut shift = 3;
+        while new_program != self.data.program {
+            let mut cpu = self.data.clone();
+            cpu.register_a = a_start + low_bits;
+            new_program.clear();
+            while cpu.program_counter < cpu.program.len() && new_program.len() <= self.data.program.len() {
+                let instruction = cpu.program[cpu.program_counter];
+                cpu.program_counter = cpu.program_counter + 1;
+                let maybe_instruction = match instruction {
+                    0 => adv(&mut cpu),
+                    1 => bxl(&mut cpu),
+                    2 => bst(&mut cpu),
+                    3 => jnz(&mut cpu),
+                    4 => bxc(&mut cpu),
+                    5 => out(&mut cpu),
+                    6 => bdv(&mut cpu),
+                    7 => cdv(&mut cpu),
+                    _ => panic!()
+                };
+                if maybe_instruction.is_some() {
+                    new_program.push(maybe_instruction.unwrap());
+                }
+            }
+            if new_program == self.data.program {
+                break;
+            }
+            if new_program.len() > cpu.program.len() {
+                low_bits = (a_start % ((1 << shift) -1 )) + 1;
+                a_start >>= shift;
+            } else {
+                if new_program.ends_with(&cpu.program[cpu.program.len() - new_program.len() as usize..]) {
+                    a_start = (a_start + low_bits) << shift;
+                    low_bits = 0;
+                } else {
+                    low_bits += 1;
+                }
+                while low_bits == (1 << shift) {
+                    low_bits = (a_start % ((1 << shift) -1 )) + 1;
+                    a_start >>= shift;
+                }
+            }
+            if a_start == 0 && low_bits == 1 {
+                shift += 1;
+            }
+        }
+        a_start + low_bits
     }
 }
 
