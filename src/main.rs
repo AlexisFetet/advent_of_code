@@ -17,7 +17,9 @@
 // use crate::d17::D17Solver;
 // use crate::d18::D18Solver;
 // use crate::d19::D19Solver;
-use crate::d20::D20Solver;
+// use crate::d20::D20Solver;
+// use crate::d21::D21Solver;
+use crate::d22::D22Solver;
 
 pub mod d1;
 pub mod d2;
@@ -39,6 +41,8 @@ pub mod d17;
 pub mod d18;
 pub mod d19;
 pub mod d20;
+pub mod d21;
+pub mod d22;
 
 fn main() {
 
@@ -310,14 +314,42 @@ fn main() {
 
     // ----------------------------------------------
 
-    let mut d20_solver: D20Solver = D20Solver{..Default::default()};
+    // let mut d20_solver: D20Solver = D20Solver{..Default::default()};
 
-    d20_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d20/test/1.txt"));
-    println!("Day20 test1 p1: {}", d20_solver.solve_p1());
-    println!("Day20 test2 p2: {}", d20_solver.solve_p2());
+    // d20_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d20/test/1.txt"));
+    // println!("Day20 test1 p1: {}", d20_solver.solve_p1());
+    // println!("Day20 test2 p2: {}", d20_solver.solve_p2());
 
 
-    d20_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d20/input.txt"));
-    println!("Day20 p1: {}", d20_solver.solve_p1());
-    println!("Day20 p2: {}", d20_solver.solve_p2());
+    // d20_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d20/input.txt"));
+    // println!("Day20 p1: {}", d20_solver.solve_p1());
+    // println!("Day20 p2: {}", d20_solver.solve_p2());
+
+    // ----------------------------------------------
+
+    // let mut d21_solver: D21Solver = D21Solver{..Default::default()};
+
+    // d21_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d21/test/1.txt"));
+    // println!("Day21 test1 p1: {}", d21_solver.solve_p1());
+    // println!("Day21 test2 p2: {}", d21_solver.solve_p2());
+
+
+    // d21_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d21/input.txt"));
+    // println!("Day21 p1: {}", d21_solver.solve_p1());
+    // println!("Day21 p2: {}", d21_solver.solve_p2());
+
+    // ----------------------------------------------
+
+    let mut d22_solver: D22Solver = D22Solver{..Default::default()};
+
+    d22_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d22/test/1.txt"));
+    println!("Day22 test1 p1: {}", d22_solver.solve_p1());
+
+    d22_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d22/test/2.txt"));
+    println!("Day22 test2 p2: {}", d22_solver.solve_p2());
+
+
+    d22_solver.extract_info(String::from("/home/alexis/advent_of_code/data/d22/input.txt"));
+    println!("Day22 p1: {}", d22_solver.solve_p1());
+    println!("Day22 p2: {}", d22_solver.solve_p2());
 }
